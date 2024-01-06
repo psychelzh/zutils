@@ -8,6 +8,6 @@
 #' @return A list with the selected elements.
 #' @export
 select_list <- function(.l, ...) {
-  pos <- tidyselect::eval_select(expr(c(...)), .l)
+  pos <- eval_select(expr(c(...)), .l)
   set_names(.l[pos], names(pos))
 }
