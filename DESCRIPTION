@@ -8,8 +8,10 @@ Description: This package mainly contains some miscellaneous utilities
     that I use frequently.
 License: MIT + file LICENSE
 Imports:
+    dplyr,
     rlang,
-    tarchetypes,
+    stringr,
+    tidyr,
     tidyselect
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
