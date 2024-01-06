@@ -12,6 +12,6 @@ call_full <- function(.fn) {
 }
 
 syms_args <- function(.fn) {
-  args <- formalArgs(as_function(.fn))
-  setNames(syms(args), args)
+  args <- fn_fmls_names(as_function(.fn))
+  set_names(syms(args), args)
 }
