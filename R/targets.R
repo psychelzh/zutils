@@ -22,7 +22,7 @@ tar_combine_with_meta <- function(name, cols_meta, ...,
                                   prefix = NULL,
                                   fun_pre = identity,
                                   fun_post = identity) {
-  rlang::check_dots_used()
+  check_dots_used()
   ischar_name <- tryCatch(
     is.character(name) && length(name) == 1L,
     error = function(e) FALSE
@@ -34,12 +34,12 @@ tar_combine_with_meta <- function(name, cols_meta, ...,
     ...,
     command = bquote(
       list(!!!.x) |>
-        lapply(.(rlang::as_function(fun_pre))) |>
+        lapply(.(as_function(fun_pre))) |>
         bind_rows(.id = "id") |>
         # note there is delimiter after prefix should be removed too
         mutate(id = str_remove(id, str_c(.(prefix), "."))) |>
         separate(id, .(cols_meta), convert = TRUE) |>
-        .(rlang::as_function(fun_post))()
+        .(as_function(fun_post))()
     )
   )
 }
