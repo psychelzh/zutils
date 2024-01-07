@@ -1,3 +1,3 @@
-# zutils (development version)
+# zutils 0.0.1
 
-* Initial CRAN submission.
+* First github release.
