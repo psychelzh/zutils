@@ -1,6 +1,6 @@
 Package: zutils
 Title: Zhang Liang's miscellaneous utilities
-Version: 0.0.4
+Version: 0.0.5
 Authors@R:
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150"))
@@ -15,8 +15,7 @@ Imports:
     tidyr,
     tidyselect
 Suggests:
-    testthat (>= 3.0.0),
-    tibble
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

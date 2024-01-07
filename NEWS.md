@@ -1,3 +1,9 @@
+# zutils 0.0.5
+
+## Breaking changes
+
+* Removed `bind_rows_meta()` and added `separate_wider_dsv()` which solves a similar problem but in a more general way.
+
 # zutils 0.0.4
 
 ## Bug fixes
