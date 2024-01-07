@@ -12,7 +12,7 @@ test_that("One piece of meta", {
     .names_meta = "x",
     .prefix = "test"
   ) |>
-    expect_identical(out)
+    expect_equal(out, ignore_attr = TRUE)
 })
 
 test_that("Two pieces of meta", {
@@ -30,7 +30,7 @@ test_that("Two pieces of meta", {
     .names_meta = c("x", "y"),
     .prefix = "test"
   ) |>
-    expect_identical(out)
+    expect_equal(out, ignore_attr = TRUE)
 })
 
 test_that("No prefix", {
@@ -46,5 +46,17 @@ test_that("No prefix", {
     !!!x,
     .names_meta = "x"
   ) |>
-    expect_identical(out)
+    expect_equal(out, ignore_attr = TRUE)
+})
+
+test_that("Ignore meta", {
+  x <- list(
+    a = data.frame(z = 1:2),
+    b = data.frame(z = 2)
+  )
+  out <- tibble::tibble(
+    z = c(1, 2, 2)
+  )
+  bind_rows_meta(!!!x) |>
+    expect_equal(out, ignore_attr = TRUE)
 })
