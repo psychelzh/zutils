@@ -7,38 +7,39 @@
 bind_rows_meta(
   ...,
   .names_meta = NULL,
+  .patterns_meta = NULL,
+  .delim = "_",
   .prefix = NULL,
   .fun_pre = NULL,
-  .fun_post = NULL,
-  .delim_name = "_"
+  .fun_post = NULL
 )
 }
 \arguments{
-\item{...}{Data frames to combine. Typically, they are named appropriately
-to extract the metadata.}
+\item{...}{Data frames to combine. Typically, they are named appropriately to
+extract the metadata.}
 
-\item{.names_meta}{Character vector of names of the metadata columns. If
-\code{NULL}, the metadata parsing is skipped. If set, you should make sure
-that the data frames are named appropriately.}
+\item{.names_meta, .patterns_meta}{Character vectors of names and patterns to
+extract the metadata from the names of the data frames. The \code{.names_meta}
+is used to name the metadata columns and \code{.patterns_meta} is used to
+extract the values. If \code{.names_meta} is \code{NULL}, the metadata parsing is
+skipped. If \code{.patterns_meta} is \code{NULL}, they are assumed to be \code{".*"}.}
+
+\item{.delim}{Delimiter used in the names of the data frames to separate
+different pieces of metadata.}
 
 \item{.prefix}{Prefix to be removed from the target names to retrieve the
-metadata. If \code{NULL}, the parsed columns with values that are the same
-across all data frames are removed.}
+metadata.}
 
 \item{.fun_pre, .fun_post}{Functions to apply to the data before and after
 combining. Note they should return values of \code{\link[=data.frame]{data.frame()}} class.}
-
-\item{.delim_name}{Delimiter used in the names of the data frames to separate
-the metadata.}
 }
 \value{
 A data frame with the combined data and metadata.
 }
 \description{
-This is a wrapper around \code{\link[dplyr:bind_rows]{dplyr::bind_rows()}} that allows to combine
-multiple data frames with metadata. The metadata is extracted from the
-names of the data frames. The names of the data frames should be of the
-form \code{prefix_meta1_meta2_...} given the delimiter is set as \verb{_}. The
-metadata columns are then extracted and converted to the appropriate
-types.
+This is a wrapper around \code{\link[dplyr:bind_rows]{dplyr::bind_rows()}} that allows to combine multiple
+data frames with metadata. The metadata is extracted from the names of the
+data frames. The names of the data frames should be of the form
+\code{prefix_meta1_meta2_...} given the delimiter is set as \verb{_}. The metadata
+columns are then extracted and converted to the appropriate types.
 }

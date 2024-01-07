@@ -1,43 +1,54 @@
 #' Combine multiple data frames by row with metadata from names
 #'
-#' This is a wrapper around [dplyr::bind_rows()] that allows to combine
-#' multiple data frames with metadata. The metadata is extracted from the
-#' names of the data frames. The names of the data frames should be of the
-#' form `prefix_meta1_meta2_...` given the delimiter is set as `_`. The
-#' metadata columns are then extracted and converted to the appropriate
-#' types.
+#' This is a wrapper around [dplyr::bind_rows()] that allows to combine multiple
+#' data frames with metadata. The metadata is extracted from the names of the
+#' data frames. The names of the data frames should be of the form
+#' `prefix_meta1_meta2_...` given the delimiter is set as `_`. The metadata
+#' columns are then extracted and converted to the appropriate types.
 #'
-#' @param ... Data frames to combine. Typically, they are named appropriately
-#'   to extract the metadata.
-#' @param .names_meta Character vector of names of the metadata columns. If
-#'   `NULL`, the metadata parsing is skipped. If set, you should make sure
-#'   that the data frames are named appropriately.
+#' @param ... Data frames to combine. Typically, they are named appropriately to
+#'   extract the metadata.
+#' @param .names_meta,.patterns_meta Character vectors of names and patterns to
+#'   extract the metadata from the names of the data frames. The `.names_meta`
+#'   is used to name the metadata columns and `.patterns_meta` is used to
+#'   extract the values. If `.names_meta` is `NULL`, the metadata parsing is
+#'   skipped. If `.patterns_meta` is `NULL`, they are assumed to be `".*"`.
+#' @param .delim Delimiter used in the names of the data frames to separate
+#'   different pieces of metadata.
 #' @param .prefix Prefix to be removed from the target names to retrieve the
-#'   metadata. If `NULL`, the parsed columns with values that are the same
-#'   across all data frames are removed.
+#'   metadata.
 #' @param .fun_pre,.fun_post Functions to apply to the data before and after
 #'   combining. Note they should return values of [data.frame()] class.
-#' @param .delim_name Delimiter used in the names of the data frames to separate
-#'   the metadata.
 #' @return A data frame with the combined data and metadata.
 #' @export
 bind_rows_meta <- function(...,
                            .names_meta = NULL,
+                           .patterns_meta = NULL,
+                           .delim = "_",
                            .prefix = NULL,
                            .fun_pre = NULL,
-                           .fun_post = NULL,
-                           .delim_name = "_") {
+                           .fun_post = NULL) {
   x <- list2(...)
   if (!is.null(.fun_pre)) {
     x <- lapply(x, as_function(.fun_pre))
   }
   if (!is.null(.names_meta)) {
-    name_id <- ".id"
-    data <- dplyr::bind_rows(x, .id = name_id) |>
+    .patterns <- compose_patterns(.names_meta, .patterns_meta, .delim)
+    if (!is.null(.prefix)) {
+      .patterns <- c(
+        .prefix,
+        stringr::str_c(.delim, "?"),
+        .patterns
+      )
+    }
+    data <- dplyr::bind_rows(x, .id = ".id") |>
+      tidyr::separate_wider_regex(".id", .patterns) |>
+      # workaround for https://github.com/tidyverse/tidyr/issues/1513
       dplyr::mutate(
-        parse_meta(.data[[name_id]], .names_meta, .prefix, .delim_name),
-        .keep = "unused",
-        .before = 1
+        dplyr::across(
+          any_of(names(.patterns)),
+          \(col) utils::type.convert(col, as.is = TRUE)
+        )
       )
   } else {
     data <- dplyr::bind_rows(x)
@@ -48,26 +59,13 @@ bind_rows_meta <- function(...,
   data
 }
 
-parse_meta <- function(meta, .names_meta, .prefix, .delim_name) {
-  if (!is.null(.prefix)) {
-    meta <- stringr::str_remove(meta, .prefix)
+compose_patterns <- function(.names, .patterns, .delim) {
+  if (is.null(.patterns)) {
+    .patterns <- rep(".*", length(.names))
   }
-  meta_parsed <- stringr::str_split(
-    meta, .delim_name,
-    simplify = TRUE
-  )
-  stopifnot("Metadata should be of the same form." = is.matrix(meta_parsed))
-  if (is.null(.prefix)) {
-    meta_parsed <- meta_parsed[
-      ,
-      lengths(apply(meta_parsed, 2, unique, simplify = FALSE)) > 1
-    ]
-  }
-  stopifnot(
-    "Column number of metadata does not match input `.names_meta`." =
-      ncol(meta_parsed) == length(.names_meta)
-  )
-  meta_parsed |>
-    tibble::as_tibble(.name_repair = \(x) .names_meta) |>
-    utils::type.convert(as.is = TRUE)
+  out <- names <- character(2 * length(.names) - 1)
+  out[seq(1, length(out), 2)] <- .patterns
+  out[seq(2, length(out), 2)] <- .delim
+  names[seq(1, length(out), 2)] <- .names
+  set_names(out, names)
 }
