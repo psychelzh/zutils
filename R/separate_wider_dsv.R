@@ -25,8 +25,9 @@ separate_wider_dsv <- function(data, col, names, ...,
                                suffix = NULL) {
   check_dots_used()
   if (is.null(patterns)) {
-    patterns <- compose_patterns(names, patterns, delim)
+    patterns <- rep(".*?", length(names))
   }
+  patterns <- compose_patterns(names, patterns, delim)
   if (!is.null(prefix)) {
     patterns <- c(
       prefix,
@@ -52,9 +53,6 @@ separate_wider_dsv <- function(data, col, names, ...,
 }
 
 compose_patterns <- function(names, patterns, delim) {
-  if (is.null(patterns)) {
-    patterns <- rep(".*?", length(names))
-  }
   out <- rep(delim, 2 * length(names) - 1)
   out[seq(1, length(out), 2)] <- patterns
   out_names <- character(2 * length(names) - 1)
