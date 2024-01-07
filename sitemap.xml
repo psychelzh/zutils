@@ -19,9 +19,6 @@
     <loc>https://psychelzh.github.io/zutils/news/index.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/zutils/reference/bind_rows_meta.html</loc>
-  </url>
-  <url>
     <loc>https://psychelzh.github.io/zutils/reference/call_full.html</loc>
   </url>
   <url>
@@ -29,5 +26,8 @@
   </url>
   <url>
     <loc>https://psychelzh.github.io/zutils/reference/select_list.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/zutils/reference/separate_wider_dsv.html</loc>
   </url>
 </urlset>
