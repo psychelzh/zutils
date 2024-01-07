@@ -57,6 +57,7 @@ parse_meta <- function(meta, .names_meta, .prefix, .delim_name) {
     meta, .delim_name,
     simplify = TRUE
   )
+  stopifnot("Metadata should be of the same form." = is.matrix(meta_parsed))
   if (is.null(.prefix)) {
     meta_parsed <- meta_parsed[
       ,
