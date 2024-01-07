@@ -1,6 +1,6 @@
 Package: zutils
 Title: Zhang Liang's miscellaneous utilities
-Version: 0.0.4
+Version: 0.0.4.9000
 Authors@R:
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150"))
