@@ -1,17 +1,50 @@
-test_that("Smoke test", {
+test_that("One piece of meta", {
   x <- list(
-    test_1_b = data.frame(z = 1:2),
-    test_2_c = data.frame(z = 2)
+    test_1 = data.frame(z = 1:2),
+    test_2 = data.frame(z = 2)
   )
   out <- tibble::tibble(
     x = c(1L, 1L, 2L),
-    y = c("b", "b", "c"),
+    z = c(1, 2, 2)
+  )
+  bind_rows_meta(
+    !!!x,
+    .names_meta = "x",
+    .prefix = "test"
+  ) |>
+    expect_identical(out)
+})
+
+test_that("Two pieces of meta", {
+  x <- list(
+    test_1_a = data.frame(z = 1:2),
+    test_2_b = data.frame(z = 2)
+  )
+  out <- tibble::tibble(
+    x = c(1L, 1L, 2L),
+    y = c("a", "a", "b"),
     z = c(1, 2, 2)
   )
   bind_rows_meta(
     !!!x,
     .names_meta = c("x", "y"),
     .prefix = "test"
+  ) |>
+    expect_identical(out)
+})
+
+test_that("No prefix", {
+  x <- list(
+    a = data.frame(z = 1:2),
+    b = data.frame(z = 2)
+  )
+  out <- tibble::tibble(
+    x = c("a", "a", "b"),
+    z = c(1, 2, 2)
+  )
+  bind_rows_meta(
+    !!!x,
+    .names_meta = "x"
   ) |>
     expect_identical(out)
 })
