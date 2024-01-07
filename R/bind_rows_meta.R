@@ -1,6 +1,6 @@
-#' Combine multiple data frames row-wise with metadata
+#' Combine multiple data frames by row with metadata from names
 #'
-#' This is a wrapper around [vctrs::vec_rbind()] that allows to combine
+#' This is a wrapper around [dplyr::bind_rows()] that allows to combine
 #' multiple data frames with metadata. The metadata is extracted from the
 #' names of the data frames. The names of the data frames should be of the
 #' form `prefix_meta1_meta2_...` given the delimiter is set as `_`. The
@@ -21,7 +21,7 @@
 #'   the metadata.
 #' @return A data frame with the combined data and metadata.
 #' @export
-vec_rbind_meta <- function(...,
+bind_rows_meta <- function(...,
                            .names_meta = NULL,
                            .prefix = NULL,
                            .fun_pre = NULL,
@@ -31,17 +31,16 @@ vec_rbind_meta <- function(...,
   if (!is.null(.fun_pre)) {
     x <- lapply(x, as_function(.fun_pre))
   }
-
   if (!is.null(.names_meta)) {
     name_id <- ".id"
-    data <- vctrs::vec_rbind(!!!x, .names_to = name_id) |>
+    data <- dplyr::bind_rows(x, .id = name_id) |>
       dplyr::mutate(
         parse_meta(.data[[name_id]], .names_meta, .prefix, .delim_name),
         .keep = "unused",
         .before = 1
       )
   } else {
-    data <- vctrs::vec_rbind(!!!x)
+    data <- dplyr::bind_rows(x)
   }
   if (!is.null(.fun_post)) {
     data <- as_function(.fun_post)(data)
