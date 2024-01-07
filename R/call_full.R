@@ -8,7 +8,7 @@
 #' @return A call to the function with its arguments.
 #' @export
 call_full <- function(.fn) {
-  call2(substitute(.fn), !!!syms_args(.fn))
+  call2(.fn, !!!syms_args(.fn))
 }
 
 syms_args <- function(.fn) {
