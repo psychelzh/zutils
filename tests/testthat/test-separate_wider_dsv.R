@@ -22,3 +22,13 @@ test_that("With prefix and suffix", {
   ) |>
     expect_equal(out, ignore_attr = TRUE)
 })
+
+test_that("Specify custom pattern", {
+  data <- data.frame(val = c("1_a", "2_b"))
+  out <- data.frame(x = c(1L, 2L), y = c("a", "b"))
+  separate_wider_dsv(
+    data, val, c("x", "y"),
+    patterns = c(".+", ".+")
+  ) |>
+    expect_equal(out, ignore_attr = TRUE)
+})

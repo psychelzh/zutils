@@ -1,3 +1,9 @@
+# zutils 0.0.6
+
+## Bug fixes
+
+* Fixed a bug introduced in 0.0.4 that `separate_wider_dsv()` does not work when `patterns` is specified.
+
 # zutils 0.0.5
 
 ## Breaking changes
