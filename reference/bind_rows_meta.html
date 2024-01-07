@@ -18,7 +18,7 @@ columns are then extracted and converted to the appropriate types."><!-- mathjax
     
     <a class="navbar-brand me-2" href="../index.html">zutils</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +62,7 @@ columns are then extracted and converted to the appropriate types.</p>
 <span>  .names_meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .patterns_meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .delim <span class="op">=</span> <span class="st">"_"</span>,</span>
-<span>  .prefix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  .fun_pre <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  .fun_post <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  .prefix <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,11 +89,6 @@ different pieces of metadata.</p></dd>
 <dt>.prefix</dt>
 <dd><p>Prefix to be removed from the target names to retrieve the
 metadata.</p></dd>
-
-
-<dt>.fun_pre, .fun_post</dt>
-<dd><p>Functions to apply to the data before and after
-combining. Note they should return values of <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> class.</p></dd>
 
 </dl></div>
     <div class="section level2">
