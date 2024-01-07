@@ -63,9 +63,9 @@ compose_patterns <- function(.names, .patterns, .delim) {
   if (is.null(.patterns)) {
     .patterns <- rep(".*", length(.names))
   }
-  out <- names <- character(2 * length(.names) - 1)
+  out <- rep(.delim, 2 * length(.names) - 1)
   out[seq(1, length(out), 2)] <- .patterns
-  out[seq(2, length(out), 2)] <- .delim
+  names <- character(2 * length(.names) - 1)
   names[seq(1, length(out), 2)] <- .names
   set_names(out, names)
 }
