@@ -1,5 +1,9 @@
 # zutils 0.0.4
 
+## Bug fixes
+
+* Fixed a bug in `call_fun()` which is introduced in 0.0.3.
+
 # zutils 0.0.3
 
 ## Breaking changes
