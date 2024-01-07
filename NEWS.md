@@ -1,3 +1,9 @@
+# zutils 0.0.3
+
+## Breaking changes
+
+* Removed `.fun_pre` and `.fun_post` arguments from `bind_rows_meta()`. These two arguments are not expected to be used in this function.
+
 # zutils 0.0.2
 
 # zutils 0.0.1

@@ -9,9 +9,7 @@ bind_rows_meta(
   .names_meta = NULL,
   .patterns_meta = NULL,
   .delim = "_",
-  .prefix = NULL,
-  .fun_pre = NULL,
-  .fun_post = NULL
+  .prefix = NULL
 )
 }
 \arguments{
@@ -29,9 +27,6 @@ different pieces of metadata.}
 
 \item{.prefix}{Prefix to be removed from the target names to retrieve the
 metadata.}
-
-\item{.fun_pre, .fun_post}{Functions to apply to the data before and after
-combining. Note they should return values of \code{\link[=data.frame]{data.frame()}} class.}
 }
 \value{
 A data frame with the combined data and metadata.

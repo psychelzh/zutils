@@ -17,46 +17,34 @@
 #'   different pieces of metadata.
 #' @param .prefix Prefix to be removed from the target names to retrieve the
 #'   metadata.
-#' @param .fun_pre,.fun_post Functions to apply to the data before and after
-#'   combining. Note they should return values of [data.frame()] class.
 #' @return A data frame with the combined data and metadata.
 #' @export
 bind_rows_meta <- function(...,
                            .names_meta = NULL,
                            .patterns_meta = NULL,
                            .delim = "_",
-                           .prefix = NULL,
-                           .fun_pre = NULL,
-                           .fun_post = NULL) {
-  x <- list2(...)
-  if (!is.null(.fun_pre)) {
-    x <- lapply(x, as_function(.fun_pre))
+                           .prefix = NULL) {
+  data <- dplyr::bind_rows(..., .id = ".id")
+  if (is.null(.names_meta)) {
+    return(dplyr::select(data, !".id"))
   }
-  if (!is.null(.names_meta)) {
-    .patterns <- compose_patterns(.names_meta, .patterns_meta, .delim)
-    if (!is.null(.prefix)) {
-      .patterns <- c(
-        .prefix,
-        stringr::str_c(.delim, "?"),
-        .patterns
+  .patterns <- compose_patterns(.names_meta, .patterns_meta, .delim)
+  if (!is.null(.prefix)) {
+    .patterns <- c(
+      .prefix,
+      stringr::str_c(.delim, "?"),
+      .patterns
+    )
+  }
+  data |>
+    tidyr::separate_wider_regex(".id", .patterns) |>
+    # workaround for https://github.com/tidyverse/tidyr/issues/1513
+    dplyr::mutate(
+      dplyr::across(
+        any_of(names(.patterns)),
+        \(col) utils::type.convert(col, as.is = TRUE)
       )
-    }
-    data <- dplyr::bind_rows(x, .id = ".id") |>
-      tidyr::separate_wider_regex(".id", .patterns) |>
-      # workaround for https://github.com/tidyverse/tidyr/issues/1513
-      dplyr::mutate(
-        dplyr::across(
-          any_of(names(.patterns)),
-          \(col) utils::type.convert(col, as.is = TRUE)
-        )
-      )
-  } else {
-    data <- dplyr::bind_rows(x)
-  }
-  if (!is.null(.fun_post)) {
-    data <- as_function(.fun_post)(data)
-  }
-  data
+    )
 }
 
 compose_patterns <- function(.names, .patterns, .delim) {
