@@ -20,5 +20,12 @@ You can install the development version of zutils from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("psychelzh/zutils")
+devtools::install_github("psychelzh/zutils@develop")
+```
+
+Or you can install the stable version of zutils from
+[r-universe](https://psychelzh.r-universe.dev/) with:
+
+``` r
+install.packages("zutils", repos = c(getOption("repos"), "https://psychelzh.r-universe.dev"))
 ```
