@@ -45,10 +45,8 @@ separate_wider_dsv <- function(data, col, names, ...,
   tidyr::separate_wider_regex(data, {{ col }}, patterns, ...) |>
     # workaround for https://github.com/tidyverse/tidyr/issues/1513
     dplyr::mutate(
-      dplyr::across(
-        all_of(names),
-        \(col) utils::type.convert(col, as.is = TRUE)
-      )
+      dplyr::pick(all_of(names)) |>
+        utils::type.convert(as.is = TRUE)
     )
 }
 
