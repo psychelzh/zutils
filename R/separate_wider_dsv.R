@@ -7,7 +7,8 @@
 #'
 #' @param data A data frame.
 #' @param col <[`tidy-select`][tidyr_tidy_select]> Column to separate.
-#' @param names Names of the new columns.
+#' @param names Names of the new columns. Use `NA` if you want a component not
+#'   to be in the output.
 #' @param ... Additional arguments passed to [tidyr::separate_wider_regex()].
 #' @param patterns Regular expressions to extract the values from the column. If
 #'   `NULL`, the pattern will match any character non-greedily. The length of
@@ -45,7 +46,7 @@ separate_wider_dsv <- function(data, col, names, ...,
   tidyr::separate_wider_regex(data, {{ col }}, patterns, ...) |>
     # workaround for https://github.com/tidyverse/tidyr/issues/1513
     dplyr::mutate(
-      dplyr::pick(all_of(names)) |>
+      dplyr::pick(all_of(names[!is.na(names)])) |>
         utils::type.convert(as.is = TRUE)
     )
 }
