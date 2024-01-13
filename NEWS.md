@@ -1,3 +1,9 @@
+# zutils 0.0.7
+
+## New Features
+
+* Support drop components by specifiying `NA` in `names` argument of `separate_wider_dsv()`.
+
 # zutils 0.0.6
 
 ## Bug fixes

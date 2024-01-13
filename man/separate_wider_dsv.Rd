@@ -20,7 +20,8 @@ separate_wider_dsv(
 
 \item{col}{<\code{\link[=tidyr_tidy_select]{tidy-select}}> Column to separate.}
 
-\item{names}{Names of the new columns.}
+\item{names}{Names of the new columns. Use \code{NA} if you want a component not
+to be in the output.}
 
 \item{...}{Additional arguments passed to \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_regex()}}.}
 

@@ -32,3 +32,13 @@ test_that("Specify custom pattern", {
   ) |>
     expect_equal(out, ignore_attr = TRUE)
 })
+
+test_that("Drop certain field by `NA`", {
+  data <- data.frame(val = c("1_a", "2_b"))
+  out <- data.frame(x = c(1L, 2L))
+  separate_wider_dsv(
+    data, val, c("x", NA_character_),
+    patterns = c(".+", ".+")
+  ) |>
+    expect_equal(out, ignore_attr = TRUE)
+})
