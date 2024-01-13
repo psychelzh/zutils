@@ -1,4 +1,4 @@
-# zutils (development version)
+# zutils 0.0.7
 
 ## New Features
 
