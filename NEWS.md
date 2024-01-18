@@ -1,5 +1,9 @@
 # zutils (development version)
 
+## New Features
+
+* Added `cautiouly()`, a warning version of `possibly()`.
+
 # zutils 0.0.7
 
 ## New Features
