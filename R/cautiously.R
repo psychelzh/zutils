@@ -17,7 +17,7 @@ cautiously <- function(.f, otherwise = NULL) {
     tryCatch(
       .f(...),
       error = function(e) {
-        warning(conditionMessage(e))
+        warning("Error: ", conditionMessage(e))
         otherwise
       }
     )
