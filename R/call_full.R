@@ -5,10 +5,14 @@
 #' without having to type them out.
 #'
 #' @param .fn The function to call.
+#' @param ... Arguments to pass to the function.
 #' @return A call to the function with its arguments.
 #' @export
-call_full <- function(.fn) {
-  call2(.fn, !!!syms_args(.fn))
+call_full <- function(.fn, ...) {
+  defaults <- syms_args(.fn)
+  dots <- enexprs(...)
+  dots <- modifyList(defaults, dots)
+  call2(.fn, !!!dots)
 }
 
 syms_args <- function(.fn) {
