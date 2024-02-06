@@ -1,5 +1,9 @@
 # zutils (development version)
 
+## New Features
+
+* Added `...` to `call_full()` to pass additional arguments to the function.
+
 # zutils 0.0.8
 
 ## New Features
