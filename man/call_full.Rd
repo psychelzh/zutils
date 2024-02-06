@@ -4,10 +4,12 @@
 \alias{call_full}
 \title{Create a call to a function with its arguments}
 \usage{
-call_full(.fn)
+call_full(.fn, ...)
 }
 \arguments{
 \item{.fn}{The function to call.}
+
+\item{...}{Arguments to pass to the function.}
 }
 \value{
 A call to the function with its arguments.
