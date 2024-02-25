@@ -11,7 +11,7 @@
 call_full <- function(.fn, ...) {
   defaults <- syms_args(.fn)
   dots <- enexprs(...)
-  dots <- utils::modifyList(defaults, dots)
+  dots <- utils::modifyList(defaults, dots, keep.null = TRUE)
   call2(.fn, !!!dots)
 }
 
