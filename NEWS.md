@@ -1,4 +1,4 @@
-# zutils (development version)
+# zutils 0.0.10
 
 * Ensure `NULL` can be feeded into `call_full()`.
 
