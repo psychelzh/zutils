@@ -1,5 +1,7 @@
 # zutils (development version)
 
+* Ensure `NULL` can be feeded into `call_full()`.
+
 # zutils 0.0.9
 
 ## New Features
