@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-02-25T00:56Z
+last_built: 2024-02-25T01:01Z
 urls:
   reference: https://psychelzh.github.io/zutils/reference
   article: https://psychelzh.github.io/zutils/articles
